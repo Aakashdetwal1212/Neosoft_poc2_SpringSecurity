@@ -30,9 +30,9 @@ public class ProjectController {
 		return new ResponseEntity<>(project,HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/insert/{studentId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Project> insertProject(@PathVariable("studentId") int studentId, @Valid @RequestBody Project project) {
-		Project project2 = studentService.insertProject(studentId, project);
+	@PostMapping(value = "/insert", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Project> insertProject(@Valid @RequestBody Project project) {
+		Project project2 = studentService.insertProject(project);
 		return new ResponseEntity<>(project2,HttpStatus.CREATED);
 	}
 	

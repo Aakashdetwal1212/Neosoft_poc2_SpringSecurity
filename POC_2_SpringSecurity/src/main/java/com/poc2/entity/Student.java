@@ -45,6 +45,7 @@ public class Student {
 	@Email(message = "Invalid EmailID")
 	private String email;
 	
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "student_id")
 	private Set<Project> projects;
 }

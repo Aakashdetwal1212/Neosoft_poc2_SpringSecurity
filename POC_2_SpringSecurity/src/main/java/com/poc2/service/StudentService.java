@@ -14,7 +14,7 @@ public interface StudentService {
 	public Student updateStudent(int id, Student student);
 	public void deleteStudentById(int id);
 	
-	public Project insertProject(int studentId, Project project);
+	public Project insertProject(Project project);
 	public void deleteProjectByNo(int projectNo);
 	public Project getProject(int projectNo);
 }

@@ -61,11 +61,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public Project insertProject(int studentId, Project project) {
-		return studentRepository.findById(studentId).map(student -> {
-			project.setStudent(student);
-			return projectRepository.save(project);
-		}).orElseThrow(() -> new ResourceNotFoundException("student id:" + studentId + " does not found"));
+	public Project insertProject(Project project) {
+		return projectRepository.save(project);
 	}
 
 	@Override

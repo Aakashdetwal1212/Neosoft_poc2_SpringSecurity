@@ -39,8 +39,4 @@ public class Project {
 	@NotNull(message = "projectDuration can not be blank")
 	@Column(name = "project_duration")
 	private int projectDuration;
-	
-	@ManyToOne
-	@JoinColumn(name = "student_id")
-	private Student student;
 }
