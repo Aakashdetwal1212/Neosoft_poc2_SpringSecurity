@@ -2,6 +2,8 @@ package com.poc2.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,12 +44,18 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	@Transactional(readOnly = false)
 	public Student updateStudent(int id, Student student) {
-		Student studentDb = studentRepository.findById(id).get();
+		Student studentDb = studentRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("student id:" + id + " does not found"));
+
 		studentDb.setFirstName(student.getFirstName());
 		studentDb.setLastName(student.getLastName());
 		studentDb.setMobile(student.getMobile());
 		studentDb.setEmail(student.getEmail());
-		studentDb.setProjects(student.getProjects());
+		// making available existing projects with new projects
+		Set<Project> projects = studentDb.getProjects();
+		projects.addAll(student.getProjects());
+
+		studentDb.setProjects(projects);
 		return studentRepository.save(studentDb);
 	}
 
@@ -61,19 +69,20 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public Project insertProject(Project project) {
-		return projectRepository.save(project);
+	public void deleteProjectByNo(int studentId, int projectNo) {
+		Student student = studentRepository.findById(studentId)
+				.orElseThrow(() -> new ResourceNotFoundException("student id:" + studentId + " does not found"));
+
+		Set<Project> projects = student.getProjects().stream().filter(project -> {
+			if (projectNo == project.getProjectNo()) {
+				projectRepository.deleteById(projectNo);
+				return false;
+			}
+			return true;
+		}).collect(Collectors.toSet());
+
+		student.setProjects(projects);
+		studentRepository.save(student);
 	}
 
-	@Override
-	@Transactional(readOnly = false)
-	public void deleteProjectByNo(int projectNo) {
-		projectRepository.deleteById(projectNo);
-	}
-
-	@Override
-	public Project getProject(int projectNo) {
-		return projectRepository.findById(projectNo)
-				.orElseThrow(() -> new ResourceNotFoundException("project No:" + projectNo + " does not found"));
-	}
 }

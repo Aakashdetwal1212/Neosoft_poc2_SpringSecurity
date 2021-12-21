@@ -30,13 +30,13 @@ public class StudentController {
 	
 	Student student;
 	
-	@GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/get/{id}/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Student> getStudent(@PathVariable("id") int id){
 		student = studentService.getStudentById(id);
 		return new ResponseEntity<>(student, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/getall/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Student>> getAllStudents(){
 		List<Student> listStudent = studentService.getAllStudent();
 		return new ResponseEntity<>(listStudent, HttpStatus.OK);
@@ -48,13 +48,13 @@ public class StudentController {
 		return new ResponseEntity<>(student,HttpStatus.CREATED);
 	}
 	
-	@PutMapping(value = "/update/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/update/{id}/admin",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int id){
 		student = studentService.updateStudent(id, student);
 		return new ResponseEntity<>(student, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value = "/delete/{id}")
+	@DeleteMapping(value = "/delete/{id}/admin")
 	public ResponseEntity<HttpStatus> deleteStudent(@PathVariable("id") int id){
 		studentService.deleteStudentById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

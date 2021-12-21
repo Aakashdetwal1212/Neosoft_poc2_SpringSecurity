@@ -40,6 +40,7 @@ public class Student {
 	private String lastName;
 	
 	@Pattern(regexp="(^$|[0-9]{10})", message = "MobileNumber Must should start with 91 or 0, length 10")
+	@NotBlank(message = "mobileNumber can not be blank")
 	private String mobile;
 	
 	@Email(message = "Invalid EmailID")
