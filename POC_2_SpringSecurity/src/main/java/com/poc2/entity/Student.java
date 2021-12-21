@@ -44,6 +44,7 @@ public class Student {
 	private String mobile;
 	
 	@Email(message = "Invalid EmailID")
+	@NotBlank(message = "email can not be blank")
 	private String email;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

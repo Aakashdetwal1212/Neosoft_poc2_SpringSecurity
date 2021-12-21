@@ -30,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Student getStudentById(int id) {
 		return studentRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("student id:" + id + " does not found"));
