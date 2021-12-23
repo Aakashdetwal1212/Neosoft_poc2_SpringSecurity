@@ -26,6 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    	//userService = new UserService();
         auth.userDetailsService(userService);
     }
 
@@ -37,10 +38,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        //jwtFilter = new JwtFilter();
+    	http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/student/authenticate")
+                .antMatchers("/student/authenticate","/student/insert")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
