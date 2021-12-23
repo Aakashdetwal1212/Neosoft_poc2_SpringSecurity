@@ -9,6 +9,7 @@ spring:
     generate-ddl: true
 server:
   port: 8081  
-  address: 
-  
- 
+jwt:
+  secret: secretkey123
+
+
